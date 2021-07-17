@@ -1,0 +1,200 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.contenitore {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 100px 50px 100px 30px;
+  justify-content: center;
+  align-items: center;
+}
+
+.contenitore .immagine {
+  width: 300px;
+  height: 400px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.contenitore .immagine img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  left: 0;
+  top: 0;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+  transition: all 0.4s ease-in-out;
+}
+
+.hidden {
+  opacity: 0;
+  z-index: -1;
+}
+
+.overlay .immagine-overlay {
+  width: 80%;
+  height: 80%;
+  position: relative;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.overlay .immagine-overlay img {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+  transform: translateY(100%);
+  transition: opacity 0.1s ease, transform 0.2s ease;
+  transition-delay: 0.3s, 0s;
+}
+
+.overlay .immagine-overlay img.active {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  transform: translateY(0%);
+  animation: trans 0.6s linear forwards;
+  bottom: auto;
+  transition: opacity 0.1s ease, transform 0.3s ease;
+
+  transition-delay: 0s, 0.2s;
+}
+
+.overlay.hidden #arrow-sinistra {
+  left: 0%;
+  opacity: 0;
+  transition: left 0.4s ease, opacity 0.4s ease;
+  transition-delay: 0s, 0.3s;
+}
+
+.overlay.hidden #arrow-destra {
+  right: 0%;
+  opacity: 0;
+  transition: right 0.4s ease, opacity 0.4s ease;
+  transition-delay: 0s, 0.3s;
+}
+
+.overlay #arrow-sinistra,
+.overlay #arrow-destra {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-2%, -50%);
+  z-index: 3;
+  cursor: pointer;
+}
+
+.overlay #arrow-destra {
+  transform: rotate(-180deg);
+  transform-origin: 50% 24%;
+}
+
+.overlay:not(.hidden) #arrow-sinistra {
+  left: 2%;
+  animation: frecciaSinistra 0.6s linear forwards;
+}
+
+.overlay:not(.hidden) #arrow-destra {
+  right: 2%;
+  animation: frecciaDestra 0.6s linear forwards;
+}
+
+@keyframes frecciaSinistra {
+  0% {
+    left: 0;
+    opacity: 0;
+  }
+  100% {
+    left: 2%;
+    opacity: 1;
+  }
+}
+
+@keyframes frecciaDestra {
+  0% {
+    right: 0;
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    right: 2%;
+  }
+}
+
+.descrizione {
+  width: 70%;
+  height: 10%;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.descrizione h3 {
+  font-size: 35px;
+  color: white;
+  opacity: 0;
+  transform: translateY(60px);
+  letter-spacing: 0px;
+  transition: opacity 0.1s ease, transform 1s ease, letter-spacing 0.7s ease;
+  transition-delay: 0s, 0s, 0.3s;
+}
+
+.descrizione.attivo h3 {
+  opacity: 1;
+  letter-spacing: 10px;
+  transform: translateY(0px);
+}
+
+.overlay .immagine-overlay::before {
+  content: "";
+  opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 10%, transparent 90%);
+}
+
+@media only screen and (max-width: 767px) {
+  .descrizione h3 {
+    font-size: 23px;
+    text-align: center;
+  }
+
+  .overlay #arrow-sinistra,
+  .overlay #arrow-destra {
+    width: 30px;
+    height: 30px;
+  }
+}
